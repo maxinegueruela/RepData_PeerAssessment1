@@ -27,7 +27,7 @@ mean(activity$steps, na.rm =TRUE)
 steps_day <- aggregate(steps~date, activity_complete,sum)
 
 #Plot histogram of steps per day
-ggplot(steps_day, aes(x=steps)) + geom_histogram(bins=5)
+ggplot(steps_day, aes(x=steps)) + geom_histogram(bins=5) + theme_dark()
 
 #Mean of total of steps taken per day
 mean_steps <- round(mean(steps_day$steps))
@@ -39,7 +39,7 @@ median_steps <- round(median(steps_day$steps))
 steps_interval <- aggregate(steps ~ interval, activity_complete, mean)
 
 #Plot time series plot (i.e. type = "l"\color{red}{\verb|type = "l"|}type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
-ggplot(data=steps_interval, aes(y=steps, x=interval)) + geom_line(colour="green")
+ggplot(data=steps_interval, aes(y=steps, x=interval)) + geom_line(colour="green") + theme_dark()
 
 #Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 max_interval <- which.max(steps_interval$steps)
@@ -66,7 +66,7 @@ for (i in 1:nrow(activity_replacedNA)) {
 steps_day_filledNA <- aggregate(steps~date, activity_replacedNA,sum)
 
 #Plot histogram of steps per day
-ggplot(steps_day_filledNA, aes(x=steps)) + geom_histogram(bins=5, fill="brown") + ggtitle("Histogram")
+ggplot(steps_day_filledNA, aes(x=steps)) + geom_histogram(bins=5, fill="brown") + ggtitle("Histogram") +theme_dark()
 
 #Mean of total of steps taken per day
 round(mean(steps_day_filledNA$steps))
@@ -96,10 +96,10 @@ activity_complete$weekday <- ifelse(weekdays(as.Date(activity_complete$date))
 
 steps_day_week <- aggregate(steps ~ interval + weekday, data = activity_complete, mean)
 
-#Plot 
+#Plot of average number of steps taken per type of day
 
 ggplot(steps_day_week, aes(interval, steps)) +
   geom_line(stat = "identity", aes(colour = weekday)) +
   facet_grid(weekday ~ ., scales="fixed", space="fixed") +
-  labs(x="Interval", y=expression("No of Steps")) +
-  ggtitle("No of steps Per Interval by day type")
+  labs(x="Interval", y=("Number of steps")) +
+  ggtitle("Average number of steps taken per type of day")+theme_dark()
